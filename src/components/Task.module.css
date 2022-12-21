@@ -13,7 +13,7 @@
 	font-size: 0.875rem;
 }
 
-.task>input[type=radio] {
+.task>input[type=checkbox] {
 	display: none;
 }
 
@@ -23,7 +23,7 @@
 	cursor: pointer;
 }
 
-.customRadio {
+.customCheckbox {
 	position: relative;
 	display: block;
 	width: 16px;
@@ -33,27 +33,24 @@
 	cursor: pointer;
 }
 
-.customRadio>img {
+.customCheckbox>img {
 	position: absolute;
 	top: 0;
 	left: 0;
 	transition: opacity 300ms ease-in;
 }
 
-.customRadio>img:nth-child(2),
-.task:hover .customRadio>img:nth-child(1) {
+.customCheckbox>img:nth-child(2),
+.task:hover .customCheckbox>img:nth-child(1) {
 	opacity: 0;
 }
 
-.task:hover .customRadio>img:nth-child(2) {
+.task:hover .customCheckbox>img:nth-child(2),
+.task>input[type=checkbox]:checked~.customCheckbox>img:nth-child(2) {
 	opacity: 1;
 }
 
-.task>input[type=radio]:checked~.customRadio>img:nth-child(2) {
-	opacity: 1;
-}
-
-.task>input[type=radio]:checked~label {
+.task>input[type=checkbox]:checked~label {
 	text-decoration: line-through;
 	color: var(--gray-300);
 }
