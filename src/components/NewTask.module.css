@@ -22,6 +22,8 @@
 .form>input:focus {
 	outline: 1px solid var(--purple-dark);
 	color: var(--gray-100);
+
+	transition: outline 300ms ease-in, color 300ms ease-in;
 }
 
 .form>button {
@@ -41,7 +43,7 @@
 
 	cursor: pointer;
 
-	transition: background-color 200ms;
+	transition: background-color 300ms ease-in;
 }
 
 .form>button:hover {
