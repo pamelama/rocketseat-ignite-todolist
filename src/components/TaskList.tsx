@@ -2,8 +2,13 @@ import styles from './TaskList.module.css'
 
 import clipboard from './../assets/clipboard.svg'
 import { Task } from './Task'
+import { ITask } from '../Interfaces/Task'
 
-export function TaskList() {
+interface TaskListProps {
+	tasks: ITask[]
+}
+
+export function TaskList({ tasks }: TaskListProps) {
 	return (
 		<main className={styles.tasks}>
 			<section className={styles.tasksInfo}>
@@ -24,9 +29,7 @@ export function TaskList() {
 			</section>
 
 			<section className={styles.tasksNotEmpty}>
-				<Task />
-				<Task />
-				<Task />
+				{tasks.map(task => <Task key={task.id} id={task.id} title={task.title} isCompleted={task.isCompleted} createdAt={task.createdAt} completedAt={task.completedAt} />)}
 			</section>
 		</main>
 	)
