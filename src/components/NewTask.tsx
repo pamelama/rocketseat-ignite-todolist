@@ -1,50 +1,56 @@
-import styles from './NewTask.module.css'
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-import { PlusCircle } from 'phosphor-react'
+import { ITask } from './../Interfaces/Task';
 
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 
-import { v4 as uuidv4 } from 'uuid'
+import { PlusCircle } from 'phosphor-react';
 
-import { ITask } from './../Interfaces/Task'
+import styles from './NewTask.module.css';
 
 interface NewTaskProps {
-	addTaskToList: (task: ITask) => void
+	handleAddTaskToList: (task: ITask) => void;
 }
 
-export function NewTask({ addTaskToList }: NewTaskProps) {
+export function NewTask({ handleAddTaskToList }: NewTaskProps) {
+	const [newTaskText, setNewTaskText] = useState('');
 
-	const [newTaskText, setNewTaskText] = useState('')
-
-	function handleNewTaskSubmit(event: FormEvent) {
-		event.preventDefault()
+	function onNewTaskSubmit(event: FormEvent) {
+		event.preventDefault();
 
 		const newTask: ITask = {
-			id: uuidv4(),
+			uuid: uuidv4(),
 			title: newTaskText,
 			isCompleted: false,
-			createdAt: new Date,
-			completedAt: null
-		}
+		};
 
-		addTaskToList(newTask)
+		handleAddTaskToList(newTask);
+		setNewTaskText('');
 	}
 
 	function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
-		setNewTaskText(event.target.value)
+		setNewTaskText(event.target.value);
 	}
 
 	return (
-		<form className={styles.form} onSubmit={handleNewTaskSubmit}>
+		<form
+			className={styles.form}
+			onSubmit={onNewTaskSubmit}
+		>
 			<input
 				name='task'
 				onChange={handleNewTaskChange}
 				value={newTaskText}
 				placeholder='Adicione uma nova tarefa'
+				required
 			/>
-			<button type='submit'>Criar <PlusCircle size={16} weight='bold' /></button>
+			<button type='submit'>
+				Criar{' '}
+				<PlusCircle
+					size={16}
+					weight='bold'
+				/>
+			</button>
 		</form>
-	)
+	);
 }
-
-// https://www.figma.com/file/QG3jiK4UaRWfETRKfplFRA/ToDo-List-(Copy)?node-id=0%3A1&t=9iF9SbGenegYRaXS-0

@@ -1,19 +1,65 @@
-import { Trash } from 'phosphor-react'
-import circle from './../assets/circle.svg'
-import checked from './../assets/checked.svg'
-import styles from './Task.module.css'
-import { ITask } from '../Interfaces/Task'
+import { ChangeEvent, useState } from 'react';
 
-export function Task({ id, title, isCompleted, createdAt, completedAt }: ITask) {
+import { ITask } from '../Interfaces/Task';
+
+import { Trash } from 'phosphor-react';
+
+import styles from './Task.module.css';
+
+import circle from './../assets/circle.svg';
+import checked from './../assets/checked.svg';
+
+interface TaskProps {
+	task: ITask;
+	handleIsCompleted: (id: string) => void;
+	handleDeleteTask: (task: ITask) => void;
+}
+
+export function Task({ task, handleIsCompleted, handleDeleteTask }: TaskProps) {
+	const [isChecked, setIsChecked] = useState(false);
+
+	function onCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
+		handleIsCompleted(event.target.id);
+	}
+
+	function onDeleteTask() {
+		handleDeleteTask(task);
+	}
+
 	return (
 		<div className={styles.task}>
-			<input type="radio" name="" id={id} />
-			<div className={styles.customRadio}>
-				<img src={circle} alt="" />
-				<img src={checked} alt="" />
+			<input
+				type='checkbox'
+				name='task'
+				id={task.uuid}
+				checked={isChecked}
+				onChange={onCheckboxChange}
+			/>
+			<div
+				className={styles.customCheckbox}
+				onClick={() => setIsChecked(!isChecked)}
+			>
+				<img
+					src={circle}
+					alt=''
+				/>
+				<img
+					src={checked}
+					alt=''
+				/>
 			</div>
-			<label htmlFor={id}>{title}</label>
-			<button title='Remover'><Trash size={16} /></button>
+			<label
+				htmlFor={task.uuid}
+				onClick={() => setIsChecked(!isChecked)}
+			>
+				{task.title}
+			</label>
+			<button
+				title='Remover'
+				onClick={onDeleteTask}
+			>
+				<Trash size={16} />
+			</button>
 		</div>
-	)
+	);
 }
